@@ -11,10 +11,13 @@ Brainlife App to reject bad data segments and/or channels MNE-Python [raw.info['
 * ` Bads `:  str ,  The comma-separated channels to reject (e.g. "MEG2422,MEG2321").
 * ` annotations `:  str , A multiline text describing segments to discard, following a format compatible with mne.Annotations:
     "start, duration, description[, channels]"
+
     For instance:
-      `2, 1, bad_segment
-      5, 1, more_selective, MEG2422, MEG2321`
-    will create an annotation named "bad_segment" starting at 2s, with duration 1s, and a, annotation named "more_selective" focused on channels MEG2422 and MEG2321, starting at 5s, with duration 1s.
+      
+      2, 1, bad_segment
+      5, 1, more_selective, MEG2422, MEG2321
+      
+    will create two annotations, one named "bad_segment" starting at 2s, with duration 1s, and second one named "more_selective" focused on channels MEG2422 and MEG2321, starting at 5s, with duration 1s.
 
 #### Ouput files are:
   * the updated MEG file in fif format (mne/raw), where `raw.info['bads']` has been updated, and with added `raw.annotations`.

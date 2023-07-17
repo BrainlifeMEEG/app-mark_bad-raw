@@ -43,8 +43,8 @@ for a in nuan:
     description.append(a.pop(0))
     ch_names.append(a)
     del a
-    not_there = [elem for elem in ch_names if elem not in raw.info['ch_names']]
-    if len(not_there) > 0:
+    not_there = [elem for elem in ch_names[-1] if elem not in raw.info['ch_names']]
+    if ch_names[-1] != [] and len(not_there) > 0:
         raise Exception("Channels {} mentioned in annotations is not present in the data.".format(not_there))
 
 annot = mne.Annotations(onset=onset,  # in seconds

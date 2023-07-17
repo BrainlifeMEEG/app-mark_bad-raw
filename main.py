@@ -32,6 +32,10 @@ nuan = config["annotations"]
 
 nuan = nuan.split("\n")
 nuan = [re.split("[,;-]",n) for n in nuan]
+# remove trailing spaces from each element of nuan
+for n in nuan:
+    for i in range(len(n)):
+        n[i] = n[i].strip()
 
 onset = list()
 duration = list()

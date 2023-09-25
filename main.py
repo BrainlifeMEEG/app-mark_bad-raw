@@ -29,34 +29,34 @@ if len(not_there) > 0:
 raw.info['bads'] = config['bads']
 
 nuan = config["annotations"]
+if nuan:
+    nuan = nuan.split("\n")
+    nuan = [re.split("[,;-]",n) for n in nuan]
+    # remove trailing spaces from each element of nuan
+    for n in nuan:
+        for i in range(len(n)):
+            n[i] = n[i].strip()
 
-nuan = nuan.split("\n")
-nuan = [re.split("[,;-]",n) for n in nuan]
-# remove trailing spaces from each element of nuan
-for n in nuan:
-    for i in range(len(n)):
-        n[i] = n[i].strip()
+    onset = list()
+    duration = list()
+    description = list()
+    ch_names = list()
+    for a in nuan:
+        onset.append(a.pop(0))
+        duration.append(a.pop(0))
+        description.append(a.pop(0))
+        ch_names.append(a)
+        del a
+        not_there = [elem for elem in ch_names[-1] if elem not in raw.info['ch_names']]
+        if ch_names[-1] != [] and len(not_there) > 0:
+            raise Exception("Channels {} mentioned in annotations is not present in the data.".format(not_there))
 
-onset = list()
-duration = list()
-description = list()
-ch_names = list()
-for a in nuan:
-    onset.append(a.pop(0))
-    duration.append(a.pop(0))
-    description.append(a.pop(0))
-    ch_names.append(a)
-    del a
-    not_there = [elem for elem in ch_names[-1] if elem not in raw.info['ch_names']]
-    if ch_names[-1] != [] and len(not_there) > 0:
-        raise Exception("Channels {} mentioned in annotations is not present in the data.".format(not_there))
+    annot = mne.Annotations(onset=onset,  # in seconds
+                            duration=duration,
+                            description=description,
+                            ch_names = ch_names)
+    print(annot)
 
-annot = mne.Annotations(onset=onset,  # in seconds
-                        duration=duration,
-                        description=description,
-                        ch_names = ch_names)
-print(annot)
+    raw.set_annotations(annot)
 
-raw.set_annotations(annot)
-
-raw.save(os.path.join('out_dir','meg.fif'))
+raw.save(os.path.join('out_dir','meg.fif'), overwrite=True)

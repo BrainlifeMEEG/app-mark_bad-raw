@@ -22,12 +22,12 @@ raw = mne.io.read_raw_fif(data_file,verbose=False)
 if config['bads']:
     # if config['bads'] is not a list, make it a list
     if not isinstance(config['bads'], list):
-        config['bads'] = config['bads'].split()
-    not_there = [elem for elem in config['bads'] if elem not in raw.info['ch_names']]
+        bads = config['bads'].split()
+    not_there = [elem for elem in bads if elem not in raw.info['ch_names']]
     if len(not_there) > 0:
         raise Exception("Channels {} not present.".format(not_there))
 
-    raw.info['bads'] = config['bads']
+    raw.info['bads'] = bads
 
 nuan = config["annotations"]
 if nuan:

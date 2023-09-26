@@ -26,7 +26,7 @@ if config['bads']:
     #if len(not_there) > 0:
     #    raise Exception("Channels {} not present.".format(not_there))
 
-    raw.info['bads'].append(bads)
+    raw.info['bads'].extend(bads)
 
 nuan = config["annotations"]
 if nuan:

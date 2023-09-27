@@ -59,4 +59,4 @@ if nuan:
 
     raw.set_annotations(annot)
 
-raw.save(os.path.join('out_dir','meg.fif'), overwrite=True)
+raw.save(os.path.join('out_dir','raw.fif'), overwrite=True)

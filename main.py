@@ -24,6 +24,8 @@ if config['bads']:
     bads = config['bads'].split(',')
     # trim leading and trailing spaces
     bads = [b.strip() for b in bads]
+    # remove empty strings
+    bads = [b for b in bads if b != '']
     #not_there = [elem for elem in bads if elem not in raw.info['ch_names']]
     #if len(not_there) > 0:
     #    raise Exception("Channels {} not present.".format(not_there))
